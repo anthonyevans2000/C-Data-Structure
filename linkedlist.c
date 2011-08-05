@@ -6,6 +6,7 @@
  */
 
 #include "linkedlist.h"
+#include <string.h>
 
 void* emptylist (void)
 {
@@ -15,6 +16,51 @@ void* emptylist (void)
 	head->first = NULL;
 	head->last = NULL;
 	return head;
+}
+
+void data_transfer(node_l *node,data_l *data)
+{
+	data_l *current;
+	intdata *intnew, *inttrans ;
+	stringdata *stringnew, *stringtrans;
+	persondata *personnew, *persontrans;
+
+	switch(data->type)
+	{
+		case 0: 
+		{	
+			inttrans = (intdata*) data->value;
+			intnew = (intdata*) smalloc(sizeof(intdata));
+			intnew->key = inttrans->key;
+			intnew->integer = inttrans->integer;
+			node->val->type = INTEGER;
+			node->val->value = intnew;
+			break;
+		}
+		case 1:
+		{
+			stringtrans = (stringdata*) data->value;
+			stringnew = (stringdata*) smalloc(sizeof(stringdata));
+			stringnew->key = inttrans->key;
+			strcpy(stringnew->string, stringtrans->string);
+			node->val->type = STRING;
+			node->val->value = stringnew;
+			break;
+		}
+		case 2:
+		{
+			persontrans = (persondata*) data->value;
+			personnew = (persondata*) smalloc(sizeof(persondata));
+			personnew->key = persontrans->key;
+			strcpy(personnew->name, persontrans->name);
+			strcpy(personnew->address_line_1, persontrans->address_line_1);
+			strcpy(personnew->address_line_2, persontrans->address_line_2);
+			strcpy(personnew->phone_number, persontrans->phone_number);
+			node->val->type = PERSON;
+			node->val->value = personnew;
+			break;
+		}
+	}
 }
 
 void endinsert (head_l *head, data_l *input)
@@ -43,7 +89,7 @@ void endinsert (head_l *head, data_l *input)
 		head->last = node;
 		
 		node->val = data;
-		//data_transfer(head,input);
+		//data_transfer(node,input);
 	}
 }
 

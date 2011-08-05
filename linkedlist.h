@@ -32,7 +32,7 @@ typedef struct persondata_l
 typedef struct listdata
 {
 	int key;
-	enum {INTEGER,STRING,PERSON} type;
+	enum datatype {INTEGER,STRING,PERSON} type;
 	void * value;
 } data_l;
 
