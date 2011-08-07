@@ -5,35 +5,38 @@
 #define STRING_LENGTH 100
 
 
-typedef struct intdata_l
+typedef struct intdata
 {
 	int key;
 	int integer;
-} intdata;
+} intdata_l;
 
-typedef struct stringdata_l
+typedef struct stringdata
 {
 	int key;
 	char string[STRING_LENGTH];
-} stringdata;
+} stringdata_l;
 
-typedef struct persondata_l
+typedef struct persondata
 {
 	int key;
 	char name[STRING_LENGTH];
 	char address_line_1[STRING_LENGTH];
 	char address_line_2[STRING_LENGTH];
 	char phone_number[STRING_LENGTH];
-} persondata;
+} persondata_l;
 
 //Stores a key and an array of voided arrays.
 //Pointer array will be null terminated.
 //Haskell style data structuring would be beneficial.
+
+enum datatype {INTEGER,STRING,PERSON} type;
+
 typedef struct listdata
 {
 	int key;
-	enum datatype {INTEGER,STRING,PERSON} type;
-	void * value;
+	enum datatype type;
+	void *value;
 } data_l;
 
 //List node, doubly linked.
@@ -57,4 +60,7 @@ typedef struct listhead
 
 
 void * emptylist (void);
-void * endretrieve (head_l*);
+void * read_integer (void);
+void data_transfer (node_l *node, data_l *data);
+void endinsert(head_l *head, data_l *input);
+void * endretrieve (head_l* head);

@@ -8,7 +8,7 @@
 #include "linkedlist.h"
 #include <string.h>
 
-void* emptylist (void)
+void *emptylist (void)
 {
 	
 	head_l * head;
@@ -18,29 +18,66 @@ void* emptylist (void)
 	return head;
 }
 
-void data_transfer(node_l *node,data_l *data)
+void *read_integer(void)
+{
+	data_l *data;
+	intdata_l *intptr;
+	int input;
+	intptr = (intdata_l *) smalloc(sizeof(intdata_l));
+	data = (data_l *) smalloc(sizeof(data_l));
+	printf("Enter an Integer\n");
+	scanf("%d",&input);
+	intptr->integer = input;
+	data->type = INTEGER;
+	data->value = intptr;
+	printf("read_integer clear\n");
+	fflush(stdout);
+	return data;
+}	
+
+
+void data_transfer(node_l *node, data_l *data)
 {
 	data_l *current;
-	intdata *intnew, *inttrans ;
-	stringdata *stringnew, *stringtrans;
-	persondata *personnew, *persontrans;
+	intdata_l *intnew, *inttrans ;
+	stringdata_l *stringnew, *stringtrans;
+	persondata_l *personnew, *persontrans;
 
 	switch(data->type)
 	{
 		case 0: 
-		{	
-			inttrans = (intdata*) data->value;
-			intnew = (intdata*) smalloc(sizeof(intdata));
+		{
+			printf("case is int\n");
+			fflush(stdout);
+			inttrans = (intdata_l*) data->value;
+			intnew = (intdata_l*) smalloc(sizeof(intdata_l));
+			
+			node->val->key=1;
+
+			printf("case is 1\n");
+			fflush(stdout);
 			intnew->key = inttrans->key;
+			
+			printf("case is 2\n");
+			fflush(stdout);
 			intnew->integer = inttrans->integer;
+			
+			printf("case is 3\n");
+			fflush(stdout);
 			node->val->type = INTEGER;
+			
+			printf("case is 4\n");
+			fflush(stdout);
+
 			node->val->value = intnew;
+			printf("transfer ok, integer is %d, type is %d\n", intnew->integer, node->val->type);
+			fflush(stdout);
 			break;
 		}
 		case 1:
 		{
-			stringtrans = (stringdata*) data->value;
-			stringnew = (stringdata*) smalloc(sizeof(stringdata));
+			stringtrans = (stringdata_l*) data->value;
+			stringnew = (stringdata_l*) smalloc(sizeof(stringdata_l));
 			stringnew->key = inttrans->key;
 			strcpy(stringnew->string, stringtrans->string);
 			node->val->type = STRING;
@@ -49,8 +86,8 @@ void data_transfer(node_l *node,data_l *data)
 		}
 		case 2:
 		{
-			persontrans = (persondata*) data->value;
-			personnew = (persondata*) smalloc(sizeof(persondata));
+			persontrans = (persondata_l*) data->value;
+			personnew = (persondata_l*) smalloc(sizeof(persondata_l));
 			personnew->key = persontrans->key;
 			strcpy(personnew->name, persontrans->name);
 			strcpy(personnew->address_line_1, persontrans->address_line_1);
@@ -71,15 +108,19 @@ void endinsert (head_l *head, data_l *input)
 
 	data = (data_l*) smalloc(sizeof(data));
 	node = (node_l*) smalloc(sizeof(node));
-	
+	printf("in endinsert\n");
+	fflush(stdout);
 	if(head->first == NULL)
-	{	
+	{
+		printf("head is null\n");
 		head->first = node;
 		head->last = node;
 		node->next = NULL;
 		node->prev = NULL;
-		node->val = input;
-
+		printf("up to data_transfer\n");
+		fflush(stdout);
+		node->val = data;
+		data_transfer(node,input);
 	}else
 	{	
 		node->prev = head->last;
@@ -89,7 +130,7 @@ void endinsert (head_l *head, data_l *input)
 		head->last = node;
 		
 		node->val = data;
-		//data_transfer(node,input);
+		data_transfer(node,input);
 	}
 }
 
